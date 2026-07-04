@@ -1,14 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-// import { NestExpressApplication } from '@nestjs/platform-express';
-// The entry file of the application which uses the core function NestFactory to create a Nest application instance.
+import { NestExpressApplication } from '@nestjs/platform-express';
+
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { abortOnError: false });
-  // const app = await NestFactory.create<NestExpressApplication>(AppModule, {abortOnError: false});
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, { abortOnError: false });
+  app.set('query parser', 'extended');
   await app.listen(process.env.PORT ?? 3000);
 }
-// bootstrap();
-// void bootstrap();
+console.log(`🚀 Application is running on port: ${process.env.PORT ?? 3000}`);
 bootstrap().catch((err) => {
   console.error(err);
   process.exit(1);
